@@ -11,7 +11,7 @@ export const POST: APIRoute = async ({ request }) => {
         return new Response("Alias and link required.", { status: 500 })
 
     if (!isURL(link))
-        return new Response("Link is invalid.", { status: 500 })
+        return new Response("Link is invalid (include https).", { status: 500 })
 
     const { error } = await supabase.from("links").insert({ alias, link })
 
@@ -29,11 +29,6 @@ function isURL(s: string) {
         new URL(s)
         return true
     } catch (_) {
-        try {
-            new URL("https://" + s)
-            return true
-        } catch(_) {
-            return false
-        }
+        return false
     }
 }

@@ -1,0 +1,17 @@
+---
+import Layout from "../components/Layout.astro"
+import { supabase } from "../lib/supabase"
+
+const { alias } = Astro.params
+
+const { data, error } = await supabase.from("links").select("link").eq("alias", alias)
+
+if (data?.length == 0 || error)
+    return Astro.redirect("/")
+
+return Astro.redirect(data[0]["link"])
+---
+
+<Layout title={alias || ""} desc={alias || ""}>
+
+</Layout>
