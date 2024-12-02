@@ -1,0 +1,22 @@
+---
+interface Props {
+	title: string
+    desc: string
+}
+
+const { title, desc } = Astro.props
+import "@fontsource/readex-pro"
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={desc} />
+		<meta name="viewport" content="width=device-width" />
+		<title>{title}</title>
+	</head>
+	<body class="my-5 bg-[#302d33] text-[#c7c2cc]">
+		<slot />
+	</body>
+</html>
