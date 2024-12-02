@@ -4,4 +4,28 @@ import Layout from "../components/Layout.astro"
 
 <Layout title="URL Shortener" desc="tinyurl but worse">
     <h1 class="text-3xl text-center">URL Shortener</h1>
+    <form id="form" class="flex flex-col w-[300px] mx-auto my-5 gap-2">
+        <input placeholder="link:" name="link" class="bg-transparent p-2 border border-[#c7c2cc] rounded-xl text-center"/>
+        <input placeholder="alias:" name="alias" class="bg-transparent p-2 border border-[#c7c2cc] rounded-xl text-center"/>
+
+        <button type="submit" class="p-2 border border-[#c7c2cc] rounded-xl">shorten</button>
+        <h1 id="error" class="text-center"></h1>
+    </form>
 </Layout>
+
+<script>
+    const form = document.getElementById("form")
+
+    form!.addEventListener("submit", async (event) => {
+        event.preventDefault()
+        const data = new FormData(form as HTMLFormElement)
+
+        const response = await fetch("/api/create", {
+            method: "POST",
+            body: data,
+        })
+
+        const text = await response.text()
+        document.getElementById("error")!.innerText = text
+    })
+</script>
